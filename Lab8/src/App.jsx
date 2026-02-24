@@ -3,24 +3,30 @@ import "./App.css";
 
 function App() {
   const [posts, setPosts] = useState([
-    {id: 1, text: "First Post"},
-    {id: 2, text: "Second Post"},
-    {id: 3, text: "Third Post"}
+    { id: 1, text: "Hello", isEdited: false },
+    { id: 2, text: "Second Post", isEdited: false },
+    { id: 3, text: "Third Post", isEdited: false }
   ]);
 
-  //Delete Post by ID
-  const handleDelete = (id) => {
-    setPosts(posts.filter((posts) => posts.id !== id));
+  // Toggle isEdited for the matching ID
+  const markAsEdited = (id) => {
+    setPosts(
+      posts.map((post) =>
+        post.id === id ? { ...post, isEdited: !post.isEdited } : post
+      )
+    );
   };
 
   return (
-    <div clasaName="app">
-      <h2>Post Deleter</h2>
+    <div className="app">
+      <h2>Post Editor</h2>
       <ul>
-        {posts.map((posts) => (
-          <li key={posts.id}>
-            {posts.text}
-            <button onClick={() => handleDelete(posts.id)}>Delete</button>
+        {posts.map((post) => (
+          <li key={post.id}>
+            {post.text}{" "}
+            <button onClick={() => markAsEdited(post.id)}>
+              {post.isEdited ? "Undo Edit" : "Mark as Edited"}
+            </button>
           </li>
         ))}
       </ul>
